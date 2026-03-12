@@ -21,8 +21,15 @@ document.addEventListener("DOMContentLoaded", () => {
         const spotsLeft = details.max_participants - details.participants.length;
 
         const participantsList = details.participants.length > 0
-          ? details.participants.map(email => `<li>${email}</li>`).join('')
-          : '<li><em>No participants yet</em></li>';
+          ? details.participants.map(email => `
+              <li class="participant-item">
+                <span class="participant-email">${email}</span>
+                <button class="delete-participant" title="Remove participant" data-activity="${name}" data-email="${email}">
+                  <span class="delete-icon">&#128465;</span>
+                </button>
+              </li>
+            `).join('')
+          : '<li class="participant-item"><em>No participants yet</em></li>';
 
         activityCard.innerHTML = `
           <h4>${name}</h4>
@@ -37,16 +44,7 @@ document.addEventListener("DOMContentLoaded", () => {
           </div>
         `;
 
-            const participantsList = details.participants.length > 0
-              ? details.participants.map(email => `
-                  <li class="participant-item">
-                    <span class="participant-email">${email}</span>
-                    <button class="delete-participant" title="Remove participant" data-activity="${name}" data-email="${email}">
-                      <span class="delete-icon">&#128465;</span>
-                    </button>
-                  </li>
-                `).join('')
-              : '<li class="participant-item"><em>No participants yet</em></li>';
+            // Duplicate assignment removed; only the above participantsList is used.
         const option = document.createElement("option");
         option.value = name;
         option.textContent = name;
